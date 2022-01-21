@@ -1,11 +1,22 @@
 import { ProduitEntity } from './produit.entity';
 
+export type StatusType =
+  | 'en_attente_selection'
+  | 'en_attente_vente'
+  | 'refuse'
+  | 'rejete'
+  | 'en_vente'
+  | 'vendu'
+  | 'livre'
+  | 'retourne'
+  | 'valide';
+
 export class LotEntity {
   _id: string;
   numeroLot: number;
   prixFinalVente: string;
   vendeur: string;
-  statut: string;
+  statut: StatusType;
   prixMin: string;
   nonVendu: boolean;
   dateMiseEnchere: string;

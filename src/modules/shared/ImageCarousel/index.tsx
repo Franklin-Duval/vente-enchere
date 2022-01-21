@@ -18,11 +18,13 @@ const ImageContainer = styled.div`
   .main_image {
     height: 300px;
     width: 320px;
+    border-radius: 20px;
   }
 
   .sub_image {
     height: 70px;
     width: 70px;
+    border-radius: 10px;
   }
 
   @media (min-width: 768px) {

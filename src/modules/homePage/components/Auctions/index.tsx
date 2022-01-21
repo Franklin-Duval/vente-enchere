@@ -5,7 +5,7 @@ import { FaAngleRight } from 'react-icons/fa';
 import { ProduitEntity } from '../../../../entities/Gestionproduit/produit.entity';
 import { PRIMARY } from '../../../../shared/colors';
 import { AnimationOnScroll } from '../../../shared/AnimationOnScroll';
-import { AuctionCard } from '../../../shared/AuctionCard';
+import { ProductCard } from '../../../shared/ProductCard';
 import { fetchProduit } from '../../../vendeur/network';
 
 const AuctionContainer = styled.div`
@@ -50,7 +50,7 @@ export const Auction = () => {
       <div>
         {produits.map((produit) => (
           <AnimationOnScroll key={produit._id} animation='zoom-in-up'>
-            <AuctionCard produit={produit} />
+            <ProductCard produit={produit} showInfo />
           </AnimationOnScroll>
         ))}
       </div>

@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import { FiFilter } from 'react-icons/fi';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { Footer } from '../../homePage/components/Footer';
-import { AuctionCard } from '../../shared/AuctionCard';
 import { Layout } from '../../shared/Layout';
+import { ProductCard } from '../../shared/ProductCard';
 import { fetchProduit } from '../../vendeur/network';
 import { FilterOptions } from '../components/FilterOptions';
 
@@ -77,7 +77,7 @@ export const CatalogPage = () => {
             <div>
               <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {produits.map((produit) => (
-                  <AuctionCard key={produit._id} produit={produit} />
+                  <ProductCard key={produit._id} produit={produit} showInfo />
                 ))}
               </div>
             </div>

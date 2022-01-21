@@ -19,3 +19,19 @@ export const fetchProduitsVendeur = (
 ): Promise<ResponseType<ProduitEntity>> => {
   return customFetch.get(API_ROUTES.PRODUITS_VENDEUR.BASEID(id));
 };
+
+export const activateVendeur = (
+  id: string,
+): Promise<ResponseType<VendeurEntity>> => {
+  return customFetch.put(API_ROUTES.VENDEURS.BASEID(id), {
+    accreditation: true,
+  });
+};
+
+export const desactivateVendeur = (
+  id: string,
+): Promise<ResponseType<VendeurEntity>> => {
+  return customFetch.put(API_ROUTES.VENDEURS.BASEID(id), {
+    accreditation: false,
+  });
+};

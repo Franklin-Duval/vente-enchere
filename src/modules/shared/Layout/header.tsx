@@ -111,7 +111,7 @@ const MenuContent = ({ closeMenu }: { closeMenu?: () => void }) => {
       <NavLink
         onClick={() => {
           closeMenu?.();
-          history.push(ROUTES.HOME_PAGE);
+          history.push(ROUTES.CATALOG_PAGE.CATALOG);
         }}
       >
         Catalogue
@@ -119,7 +119,7 @@ const MenuContent = ({ closeMenu }: { closeMenu?: () => void }) => {
       <NavLink
         onClick={() => {
           closeMenu?.();
-          history.push(ROUTES.HOME_PAGE);
+          history.push(ROUTES.VENDEUR_PAGE.DASHBOARD);
         }}
       >
         Dashboard

@@ -1,6 +1,11 @@
 import styled from '@emotion/styled';
 import { ReactNode, useState } from 'react';
-import { FaChalkboardTeacher, FaClipboardList, FaUser } from 'react-icons/fa';
+import {
+  FaChalkboardTeacher,
+  FaEnvelopeOpenText,
+  FaShopify,
+  FaUser,
+} from 'react-icons/fa';
 import { DashboardHeader } from '../../shared/DashboardHeader';
 import { SideBar } from '../../shared/SideBar';
 
@@ -74,14 +79,22 @@ const ROUTES = [
   },
   {
     icon: (clicked: string) => (
-      <FaClipboardList
-        color={clicked === 'produits' ? 'white' : 'black'}
+      <FaShopify color={clicked === 'enchere' ? 'white' : 'black'} size={24} />
+    ),
+    link: '/commissaire/auction',
+    text: 'Enchères',
+    clicked: 'enchere',
+  },
+  {
+    icon: (clicked: string) => (
+      <FaEnvelopeOpenText
+        color={clicked === 'event' ? 'white' : 'black'}
         size={24}
       />
     ),
-    link: '/commissaire/products',
-    text: 'Mes Produits',
-    clicked: 'produits',
+    link: '/commissaire/events',
+    text: 'Evènements',
+    clicked: 'event',
   },
   {
     icon: (clicked: string) => (

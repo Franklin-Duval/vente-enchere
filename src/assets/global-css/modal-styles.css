@@ -14,3 +14,9 @@
   display: block;
   height: 45px;
 }
+
+.horizontal-scroll {
+  display: flex;
+  overflow: auto;
+  white-space: nowrap;
+}

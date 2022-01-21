@@ -3,7 +3,7 @@ import { UserEntity } from './user.entity';
 
 export class VendeurEntity {
   _id: string;
-  accredidation: boolean;
+  accreditation: boolean;
   numeroCNI: string;
   specialite: string;
   chiffreAffaire: number;
@@ -13,7 +13,7 @@ export class VendeurEntity {
 
   constructor(vendeur: VendeurEntity) {
     this._id = vendeur._id;
-    this.accredidation = vendeur.accredidation;
+    this.accreditation = vendeur.accreditation;
     this.numeroCNI = vendeur.numeroCNI;
     this.specialite = vendeur.specialite;
     this.chiffreAffaire = vendeur.chiffreAffaire;

@@ -22,12 +22,16 @@ export const DataTable = <T extends { _id: string }>({
   loading,
   filterFunction,
   buttons,
+  expandable,
+  expandField,
 }: {
   columns: ColumnsType<T>;
   data: T[];
   loading?: boolean;
   filterFunction?: (dataItem: T, filterValue: string) => boolean;
   buttons?: ReactNode;
+  expandable?: boolean;
+  expandField?: string;
 }) => {
   const [filterValue, setFilterValue] = useState('');
   const [rowId, setRowId] = useState('');
@@ -51,6 +55,15 @@ export const DataTable = <T extends { _id: string }>({
         dataSource={dataToShow}
         columns={columns}
         loading={loading}
+        expandable={
+          expandable && expandField
+            ? {
+                expandedRowRender: (row: any) => (
+                  <span>{row[expandField]}</span>
+                ),
+              }
+            : {}
+        }
         size='middle'
         rowKey='_id'
         rowClassName={(row, index) =>

@@ -15,6 +15,7 @@ export const ROUTES = {
     PRODUCTS: '/vendeur/products',
     ACCOUNT: '/vendeur/account',
     NEW_PRODUCT: '/vendeur/products/new',
+    LOT_DETAIL: (id: string) => `/vendeur/lot-details/?id=${id}`,
   },
   GERANT_PAGE: {
     DASHBOARD: '/gerant/dashboard',
@@ -26,5 +27,10 @@ export const ROUTES = {
     CATALOG: '/catalog',
     PRODUCT: (productId: string) => `/catalog/product?id=${productId}`,
     LOT: (lotId: string) => `/catalog/lot?id=${lotId}`,
+  },
+  COMMISSAIRE_PAGE: {
+    DASHBOARD: '/commissaire/dashboard',
+    LOT_DETAIL: (id: string) => `/commissaire/lot-details/?id=${id}`,
+    PRODUCT_DETAIL: (id: string) => `/commissaire/product-detail/?id=${id}`,
   },
 };

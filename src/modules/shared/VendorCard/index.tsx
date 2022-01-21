@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, Card, Image } from 'antd';
+import { Button, Card, Image, Tag } from 'antd';
 import { useHistory } from 'react-router-dom';
 import slide1 from '../../../assets/images/slide1.jpg';
 import { VendeurEntity } from '../../../entities/GestionCompte/vendeur.entity';
@@ -38,7 +38,7 @@ const CardContainer = styled.div`
 
   .description {
     color: #777;
-    font-size: 12px;
+    font-size: 1.2em;
     margin-bottom: 0;
     margin-top: 10px;
     display: -webkit-box;
@@ -65,22 +65,19 @@ export const VendorCard = ({ vendor }: { vendor: VendeurEntity }) => {
         hoverable
         style={{ width: 300, height: '100%', borderRadius: 20 }}
         cover={
-          <>
-            <Image
-              alt='profil_image'
-              height={200}
-              width='100%'
-              style={{
-                objectFit: 'cover',
-                borderTopRightRadius: 20,
-                borderTopLeftRadius: 20,
-              }}
-              preview={false}
-              /* src={vendor.image} */
-              src={slide1}
-              fallback={defaultImage}
-            />
-          </>
+          <Image
+            alt='profil_image'
+            height={200}
+            width='100%'
+            style={{
+              objectFit: 'cover',
+              borderTopRightRadius: 20,
+              borderTopLeftRadius: 20,
+            }}
+            preview={false}
+            src={slide1}
+            fallback={defaultImage}
+          />
         }
       >
         <div
@@ -91,11 +88,17 @@ export const VendorCard = ({ vendor }: { vendor: VendeurEntity }) => {
             flexDirection: 'column',
           }}
         >
-          <div style={{ alignSelf: 'center' }}>
-            <p className='name'>
-              {vendor.user.nom} {vendor.user.prenom}
-            </p>
-            {/* <p className='name'>Césaire Honoré Mounah</p> */}
+          <div>
+            <div>
+              <p className='name'>
+                {vendor.user.nom} {vendor.user.prenom}
+              </p>
+              {vendor.accreditation ? (
+                <Tag color='blue'>Accrédité</Tag>
+              ) : (
+                <Tag color='red'>Non Accrédité</Tag>
+              )}
+            </div>
           </div>
           <p className='description'>{vendor.specialite}</p>
 

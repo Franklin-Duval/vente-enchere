@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { ReactNode, useState } from 'react';
 import {
+  FaBookOpen,
   FaChalkboardTeacher,
   FaClipboardList,
   FaRegChartBar,
@@ -87,6 +88,17 @@ const ROUTES = [
     link: '/admin/personnel',
     text: 'Personnel',
     clicked: 'personnel',
+  },
+  {
+    icon: (clicked: string) => (
+      <FaBookOpen
+        color={clicked === 'category' ? 'white' : 'black'}
+        size={24}
+      />
+    ),
+    link: '/admin/categories',
+    text: 'Catégories',
+    clicked: 'category',
   },
   {
     icon: (clicked: string) => (

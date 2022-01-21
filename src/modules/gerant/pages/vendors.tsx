@@ -8,11 +8,11 @@ export const GerantVendors = () => {
   const [vendeurs, setVendeurs] = useState<VendeurEntity[]>([]);
 
   const activatedVendors: VendeurEntity[] = vendeurs.filter(
-    (vendeur) => vendeur.accredidation,
+    (vendeur) => vendeur.accreditation,
   );
 
   const deactivatedVendors: VendeurEntity[] = vendeurs.filter(
-    (vendeur) => !vendeur.accredidation,
+    (vendeur) => !vendeur.accreditation,
   );
 
   useEffect(() => {

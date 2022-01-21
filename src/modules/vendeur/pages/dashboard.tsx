@@ -13,7 +13,7 @@ import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
 import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { ROUTES } from '../../../routes';
-import { PRIMARY } from '../../../shared/colors';
+import { getColor, PRIMARY } from '../../../shared/colors';
 import { defaultImage } from '../../../shared/defaultImage';
 import { API_ROUTES } from '../../shared/ApiRoutes';
 import { ButtonWithModal } from '../../shared/ButtonWithModal';
@@ -63,7 +63,9 @@ export const VendeurDashboard = () => {
       title: 'Etat',
       dataIndex: 'statut',
       key: 'statut',
-      render: (cell: string, row: any) => <Tag color='green'>{cell}</Tag>,
+      render: (cell: string, row: any) => (
+        <Tag color={getColor(cell)}>{cell}</Tag>
+      ),
     },
     {
       title: 'Prix Minimum',
@@ -92,7 +94,12 @@ export const VendeurDashboard = () => {
       key: 'action',
       render: (cell: any, row: any) => (
         <Tooltip title='Détails du lot'>
-          <Button type='primary' onClick={() => router.push('', row)}>
+          <Button
+            type='primary'
+            onClick={() =>
+              router.push(ROUTES.VENDEUR_PAGE.LOT_DETAIL(row._id), row)
+            }
+          >
             <FaExternalLinkAlt />
           </Button>
         </Tooltip>

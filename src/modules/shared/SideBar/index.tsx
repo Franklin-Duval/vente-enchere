@@ -2,8 +2,10 @@ import styled from '@emotion/styled';
 import { Image } from 'antd';
 import React from 'react';
 import { FaOutdent, FaSignInAlt } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import logo from '../../../assets/images/logo2.png';
+import { createUser } from '../../../redux/userStore/actions';
 import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
 import { defaultImage } from '../../../shared/defaultImage';
@@ -130,6 +132,7 @@ export const SideBar = ({
   setShrink: (val: boolean) => void;
 }) => {
   const router = useHistory();
+  const dispatch = useDispatch();
   return (
     <SideBarContainer>
       <div className={shrink ? 'side-nav shrink-nav-bar' : 'side-nav'}>
@@ -166,7 +169,21 @@ export const SideBar = ({
         ))}
         <div
           className={clicked === 'deconnect' ? 'clicked' : 'link'}
-          onClick={() => router.push(ROUTES.HOME_PAGE)}
+          onClick={() => {
+            //revoke token
+            dispatch(
+              createUser({
+                authentifie: false,
+                roles: [],
+                id: '',
+                nom: '',
+                prenom: '',
+                token: '',
+                nextAuthDate: 0,
+              }),
+            );
+            router.push(ROUTES.SIGNIN);
+          }}
         >
           <FaSignInAlt color='black' size={20} />
           <span className='side-bar-text'>Log out</span>

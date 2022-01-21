@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Space } from 'antd';
-import { FaAngleRight } from 'react-icons/fa';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { PRIMARY } from '../../../shared/colors';
 import { ProductCard } from '../../shared/ProductCard';
@@ -22,20 +21,10 @@ export const ProductGroup = ({ products }: { products: ProduitEntity[] }) => {
     <ProductGroupContainer>
       <Space style={{ justifyContent: 'space-between' }}>
         <h2>Produits du vendeur</h2>
-        <h3
-          style={{
-            margin: 0,
-            textDecoration: 'underline',
-            cursor: 'pointer',
-          }}
-        >
-          Voir plus{' '}
-          <FaAngleRight color='red' size={20} style={{ marginBottom: -6 }} />
-        </h3>
       </Space>
       <div>
         {products.map((produit: ProduitEntity) => (
-          <ProductCard key={produit._id} product={produit}></ProductCard>
+          <ProductCard key={produit._id} produit={produit} />
         ))}
       </div>
     </ProductGroupContainer>

@@ -1,8 +1,4 @@
-export type LocalisationType = {
-  pays: string;
-  ville: string;
-  adresse: string;
-};
+import { CompteEntity } from './compte.entity';
 
 export type RoleType =
   | 'client'
@@ -11,18 +7,26 @@ export type RoleType =
   | 'commissaire'
   | 'admin';
 
+export type LocalisationType = {
+  pays: string;
+  ville: string;
+  adresse: string;
+};
+
 export class UserEntity {
   _id: string;
   nom: string;
   prenom: string;
   localisation: LocalisationType;
+  pays: string;
+  ville: string;
   telephone: string;
   email: string;
   pseudo: string;
   roles: RoleType[];
   numeroCompte: string;
   numeroMomo: string;
-  compte: string;
+  compte: CompteEntity;
   dateAjout: string;
 
   constructor(user: UserEntity) {
@@ -30,6 +34,8 @@ export class UserEntity {
     this.nom = user.nom;
     this.prenom = user.prenom;
     this.localisation = user.localisation;
+    this.pays = user.pays;
+    this.ville = user.ville;
     this.telephone = user.telephone;
     this.email = user.email;
     this.pseudo = user.pseudo;

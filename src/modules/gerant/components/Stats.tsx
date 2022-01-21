@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { MdOutlineAssessment } from 'react-icons/md';
+import { ReactNode } from 'react';
 import { PRIMARY } from '../../../shared/colors';
 import { StatsCard } from '../../shared/StatsCard';
 
@@ -14,20 +14,27 @@ const StatsContainer = styled.div`
   }
 `;
 
-export const Stats = ({ stats }: { stats: any[] }) => {
+export const StatsGerant = ({ stats }: { stats: StatType[] }) => {
   return (
     <>
       <h2 style={{ color: PRIMARY, marginBottom: 20 }}>Summary</h2>
       <StatsContainer>
         {stats.map((stat) => (
           <StatsCard
-            icon={<MdOutlineAssessment color={PRIMARY} size={50} />}
-            stat={stat.value}
-            text={stat.label}
-            gradientColors={['green', PRIMARY]}
+            icon={stat.icon}
+            stat={stat.stat}
+            text={stat.text}
+            gradientColors={stat.gradientColors}
           />
         ))}
       </StatsContainer>
     </>
   );
+};
+
+export type StatType = {
+  icon: ReactNode;
+  text: string;
+  stat: number;
+  gradientColors: string[];
 };
