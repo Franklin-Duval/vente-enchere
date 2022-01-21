@@ -6,6 +6,7 @@ import { DetailLot } from '../pages/detailLot';
 import { VendeurEventPage } from '../pages/evenement';
 import { VendeurFeedback } from '../pages/feedback';
 import { NewProductPage } from '../pages/newProduct';
+import { Wallet } from '../pages/wallet';
 
 export const VendeurRoutes = () => {
   return (
@@ -15,6 +16,7 @@ export const VendeurRoutes = () => {
       <Route exact path='/vendeur/products/new' component={NewProductPage} />
       <Route exact path='/vendeur/account' component={VendeurAccountPage} />
       <Route exact path='/vendeur/feedback' component={VendeurFeedback} />
+      <Route exact path='/vendeur/wallet' component={Wallet} />
       <Route path='/vendeur/lot-details' component={DetailLot} />
       <Route
         exact
