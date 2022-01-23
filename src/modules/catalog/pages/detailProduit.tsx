@@ -5,8 +5,10 @@ import { Button, Space, Statistic, Tooltip } from 'antd';
 import { useEffect, useState } from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { FaRegPaperPlane } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { useLocation } from 'react-router-dom';
+import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
 import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { ROUTES } from '../../../routes';
@@ -16,7 +18,7 @@ import { DateFrHrWithTime } from '../../shared/DateToFrench';
 import { ImageCarousel } from '../../shared/ImageCarousel';
 import { Layout } from '../../shared/Layout';
 import { ProductCard } from '../../shared/ProductCard';
-import { fetchLotProduit } from '../network';
+import { fetchLotProduit, fetchRappel } from '../network';
 
 const ProductInfoContainer = styled.div`
   height: 350px;
@@ -62,6 +64,10 @@ export const ProductDetails = () => {
   const [lot, setLot] = useState<LotEntity>();
 
   const params = new URLSearchParams(useLocation().search);
+
+  const connectedUser: ConnectedUserEntity = useSelector(
+    (state: any) => state.userReducer,
+  ).user;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -118,7 +124,11 @@ export const ProductDetails = () => {
                 <AiOutlineHeart size={35} color='red' />
               </Tooltip>
               <Tooltip title='Me rappeler'>
-                <FaRegPaperPlane size={30} color={PRIMARY} />
+                <FaRegPaperPlane
+                  size={30}
+                  color={PRIMARY}
+                  onClick={() => fetchRappel(product._id, connectedUser.userId)}
+                />
               </Tooltip>
               <Statistic.Countdown
                 valueStyle={{ fontSize: 20, color: 'red' }}
