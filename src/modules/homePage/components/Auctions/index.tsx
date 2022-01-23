@@ -2,7 +2,9 @@ import styled from '@emotion/styled';
 import { Space, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import { FaAngleRight } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
 import { ProduitEntity } from '../../../../entities/Gestionproduit/produit.entity';
+import { ROUTES } from '../../../../routes';
 import { PRIMARY } from '../../../../shared/colors';
 import { AnimationOnScroll } from '../../../shared/AnimationOnScroll';
 import { ProductCard } from '../../../shared/ProductCard';
@@ -23,6 +25,7 @@ const AuctionContainer = styled.div`
 export const Auction = () => {
   const [loading, setLoading] = useState(true);
   const [produits, setProduits] = useState<ProduitEntity[]>([]);
+  const router = useHistory();
 
   useEffect(() => {
     fetchProduit().then((data) => {
@@ -44,6 +47,9 @@ export const Auction = () => {
         <h2>Enchères programmées</h2>
         <h3
           style={{ margin: 0, textDecoration: 'underline', cursor: 'pointer' }}
+          onClick={() => {
+            router.push(ROUTES.CATALOG_PAGE.CATALOG);
+          }}
         >
           Voir plus{' '}
           <FaAngleRight color='red' size={20} style={{ marginBottom: -6 }} />
