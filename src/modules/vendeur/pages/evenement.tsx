@@ -85,7 +85,7 @@ export const VendeurEventPage = () => {
   ];
 
   return (
-    <VendeurContainer clicked='products'>
+    <VendeurContainer clicked='event'>
       <div>
         <h2>Evènement</h2>
         <DataTable
