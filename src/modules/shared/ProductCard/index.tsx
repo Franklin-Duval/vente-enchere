@@ -2,11 +2,14 @@ import styled from '@emotion/styled';
 import { Card, Image, Space, Statistic, Tooltip } from 'antd';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { FaRegPaperPlane } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
 import { defaultImage } from '../../../shared/defaultImage';
+import { fetchRappel } from '../../catalog/network';
 import { API_ROUTES } from '../ApiRoutes';
 
 const CardContainer = styled.div`
@@ -80,6 +83,11 @@ export const ProductCard = ({
   onClick?: () => void;
 }) => {
   const router = useHistory();
+
+  const connectedUser: ConnectedUserEntity = useSelector(
+    (state: any) => state.userReducer,
+  ).user;
+
   return (
     <CardContainer>
       <Card
@@ -109,7 +117,11 @@ export const ProductCard = ({
                 <AiOutlineHeart size={25} color='red' />
               </Tooltip>
               <Tooltip title='Me rappeler'>
-                <FaRegPaperPlane size={20} color={PRIMARY} />
+                <FaRegPaperPlane
+                  size={20}
+                  color={PRIMARY}
+                  onClick={() => fetchRappel(produit._id, connectedUser.userId)}
+                />
               </Tooltip>
             </Space>
           </>
