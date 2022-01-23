@@ -52,6 +52,7 @@ export const API_ROUTES = {
   EVENT: {
     BASE: `${BASE_URL}api/events/`,
     BASEID: (id: string) => `${BASE_URL}api/events/${id}`,
+    VENDEUR: (id: string) => `${BASE_URL}api/events/vendeur/${id}`,
   },
   LOG: {
     BASE: `${BASE_URL}api/logs/`,
