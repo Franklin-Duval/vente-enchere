@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from '@emotion/styled';
-import { Button, Space, Statistic, Tooltip } from 'antd';
+import { Button, notification, Space, Tooltip } from 'antd';
 import { useEffect, useState } from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { FaRegPaperPlane } from 'react-icons/fa';
@@ -121,19 +121,31 @@ export const ProductDetails = () => {
           <div>
             <Space size={20}>
               <Tooltip title='Ajouter aux favoris'>
-                <AiOutlineHeart size={35} color='red' />
+                <AiOutlineHeart
+                  size={35}
+                  color='red'
+                  style={{ cursor: 'pointer' }}
+                />
               </Tooltip>
               <Tooltip title='Me rappeler'>
                 <FaRegPaperPlane
                   size={30}
                   color={PRIMARY}
-                  onClick={() => fetchRappel(product._id, connectedUser.userId)}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    fetchRappel(product._id, connectedUser.userId).then(
+                      (data) => {
+                        if (data.success) {
+                          notification.success({
+                            message: 'Succès',
+                            description: data.message,
+                          });
+                        }
+                      },
+                    );
+                  }}
                 />
               </Tooltip>
-              <Statistic.Countdown
-                valueStyle={{ fontSize: 20, color: 'red' }}
-                value={Date.now() + 1000 * 60 * 60 * 24 * 1 + 1000 * 30}
-              />
               <Button
                 type='primary'
                 size='large'
