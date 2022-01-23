@@ -73,6 +73,12 @@ export const fetchEvent = (): Promise<ResponseType<EventEntity>> => {
   return customFetch.get(API_ROUTES.EVENT.BASE);
 };
 
+export const fetchVendeurEvent = (
+  vendeurId: string,
+): Promise<ResponseType<EventEntity>> => {
+  return customFetch.get(API_ROUTES.EVENT.VENDEUR(vendeurId));
+};
+
 export const createEvent = (
   event: EventEntity,
 ): Promise<ResponseEntityType<EventEntity>> => {
