@@ -5,6 +5,7 @@ import {
   FaChalkboardTeacher,
   FaClipboardList,
   FaRegChartBar,
+  FaRegPaperPlane,
 } from 'react-icons/fa';
 import { FiActivity } from 'react-icons/fi';
 import { DashboardHeader } from '../../shared/DashboardHeader';
@@ -99,6 +100,17 @@ const ROUTES = [
     link: '/admin/categories',
     text: 'Catégories',
     clicked: 'category',
+  },
+  {
+    icon: (clicked: string) => (
+      <FaRegPaperPlane
+        color={clicked === 'rappel' ? 'white' : 'black'}
+        size={24}
+      />
+    ),
+    link: '/admin/rappel',
+    text: 'Les Rappels',
+    clicked: 'rappel',
   },
   {
     icon: (clicked: string) => (
