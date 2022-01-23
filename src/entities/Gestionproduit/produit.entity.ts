@@ -20,7 +20,6 @@ export class ProduitEntity {
   dateCreation: string;
   dateModification?: string;
   dateSuppression?: string;
-  favoris: string[];
 
   constructor(produit: ProduitEntity) {
     this._id = produit._id;

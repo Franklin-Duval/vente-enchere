@@ -5,7 +5,6 @@ import { fetchProduit } from '../../vendeur/network';
 import { FavorisComponent } from '../components/FavorisComponent';
 
 export const FavorisPage = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const [produits, setProduit] = useState<ProduitEntity[]>([]);
   useEffect(() => {
     fetchProduit().then((data) => {
