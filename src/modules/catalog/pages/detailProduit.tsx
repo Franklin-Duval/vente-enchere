@@ -19,7 +19,7 @@ import { ImageCarousel } from '../../shared/ImageCarousel';
 import { Layout } from '../../shared/Layout';
 import { ProductCard } from '../../shared/ProductCard';
 import { addFavoris, subFavoris } from '../../vendeur/network';
-import { fetchLotProduit, fetchRappel } from '../network';
+import { addRappel, fetchLotProduit } from '../network';
 
 const ProductInfoContainer = styled.div`
   height: 350px;
@@ -149,7 +149,7 @@ export const ProductDetails = () => {
                   color={PRIMARY}
                   style={{ cursor: 'pointer' }}
                   onClick={() => {
-                    fetchRappel(product._id, connectedUser.userId).then(
+                    addRappel(product._id, connectedUser.userId).then(
                       (data) => {
                         if (data.success) {
                           notification.success({

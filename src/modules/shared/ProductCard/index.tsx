@@ -9,7 +9,7 @@ import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
 import { defaultImage } from '../../../shared/defaultImage';
-import { fetchRappel } from '../../catalog/network';
+import { addRappel } from '../../catalog/network';
 import { addFavoris, subFavoris } from '../../vendeur/network';
 import { API_ROUTES } from '../ApiRoutes';
 
@@ -140,7 +140,7 @@ export const ProductCard = ({
                 <FaRegPaperPlane
                   size={20}
                   color={PRIMARY}
-                  onClick={() => fetchRappel(produit._id, connectedUser.userId)}
+                  onClick={() => addRappel(produit._id, connectedUser.userId)}
                 />
               </Tooltip>
             </Space>
