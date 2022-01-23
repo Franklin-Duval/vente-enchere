@@ -1,6 +1,8 @@
 import { Button, Tooltip } from 'antd';
 import { useEffect, useState } from 'react';
 import { FiTrash } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
+import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
 import { CategorieEntity } from '../../../entities/Gestionproduit/categorie.entity';
 import { EventEntity } from '../../../entities/Gestionproduit/event.entity';
 import { SEMIDARK } from '../../../shared/colors';
@@ -12,18 +14,23 @@ import {
 } from '../../shared/Table/cellFormatter';
 import { EventForm } from '../components/EvenementForm';
 import { VendeurContainer } from '../components/VendeurContainer';
-import { fetchEvent } from '../network';
+import { fetchVendeurEvent } from '../network';
 
 export const VendeurEventPage = () => {
   const [events, setEvents] = useState<EventEntity[]>([]);
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const connectedUser: ConnectedUserEntity = useSelector(
+    (state: any) => state.userReducer,
+  ).user;
 
   useEffect(() => {
-    fetchEvent().then((data) => {
+    fetchVendeurEvent(connectedUser._id).then((data) => {
       if (data.success) {
         setEvents(data.result);
       }
+      setIsLoading(false);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const Columns = [
@@ -80,7 +87,7 @@ export const VendeurEventPage = () => {
   return (
     <VendeurContainer clicked='products'>
       <div>
-        <h2>Evenement</h2>
+        <h2>Evènement</h2>
         <DataTable
           loading={isLoading}
           data={events}
