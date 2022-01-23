@@ -43,4 +43,7 @@ export const ROUTES = {
   ENCHERE_PAGE: {
     ENCHERE_DETAIL: (id: string) => `/enchere/enchere-details/?id=${id}`,
   },
+  FAVORIS_PAGE: {
+    FAVORIS: '/favoris',
+  },
 };

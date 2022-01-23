@@ -99,3 +99,22 @@ export const addImageEvent = (
     body: formData,
   }).then((res) => res.json());
 };
+
+export const addFavoris = (
+  userId: string,
+  productId: string,
+): Promise<ResponseType<ProduitEntity>> => {
+  return customFetch.put(
+    API_ROUTES.PRODUITS.FAVORIS_ADD(productId, userId),
+    null,
+  );
+};
+export const subFavoris = (
+  userId: string,
+  productId: string,
+): Promise<ResponseType<ProduitEntity>> => {
+  return customFetch.put(
+    API_ROUTES.PRODUITS.FAVORIS_SUB(productId, userId),
+    null,
+  );
+};

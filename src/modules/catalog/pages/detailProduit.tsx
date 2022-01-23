@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { Button, notification, Space, Tooltip } from 'antd';
 import { useEffect, useState } from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
-import { FaRegPaperPlane } from 'react-icons/fa';
+import { FaHeart, FaRegPaperPlane } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { useLocation } from 'react-router-dom';
@@ -18,6 +18,7 @@ import { DateFrHrWithTime } from '../../shared/DateToFrench';
 import { ImageCarousel } from '../../shared/ImageCarousel';
 import { Layout } from '../../shared/Layout';
 import { ProductCard } from '../../shared/ProductCard';
+import { addFavoris, subFavoris } from '../../vendeur/network';
 import { fetchLotProduit, fetchRappel } from '../network';
 
 const ProductInfoContainer = styled.div`
@@ -64,7 +65,6 @@ export const ProductDetails = () => {
   const [lot, setLot] = useState<LotEntity>();
 
   const params = new URLSearchParams(useLocation().search);
-
   const connectedUser: ConnectedUserEntity = useSelector(
     (state: any) => state.userReducer,
   ).user;
@@ -121,11 +121,27 @@ export const ProductDetails = () => {
           <div>
             <Space size={20}>
               <Tooltip title='Ajouter aux favoris'>
-                <AiOutlineHeart
-                  size={35}
-                  color='red'
-                  style={{ cursor: 'pointer' }}
-                />
+                {product.favoris.includes(connectedUser.userId) ? (
+                  <FaHeart
+                    size={25}
+                    color='red'
+                    onClick={() => {
+                      subFavoris(connectedUser.userId, product._id);
+                    }}
+                  />
+                ) : (
+                  <AiOutlineHeart
+                    size={25}
+                    color='red'
+                    onClick={() => {
+                      try {
+                        addFavoris(connectedUser.userId, product._id);
+                      } catch (error) {
+                        console.log('error', error);
+                      }
+                    }}
+                  />
+                )}
               </Tooltip>
               <Tooltip title='Me rappeler'>
                 <FaRegPaperPlane

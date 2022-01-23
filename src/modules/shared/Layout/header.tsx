@@ -135,6 +135,7 @@ const MenuContent = ({ closeMenu }: { closeMenu?: () => void }) => {
       <NavLink
         onClick={() => {
           closeMenu?.();
+          history.push(ROUTES.FAVORIS_PAGE.FAVORIS);
         }}
       >
         Favoris
