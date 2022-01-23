@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { Card, Image, Space, Statistic, Tooltip } from 'antd';
+import { Card, Image, message, Space, Statistic, Tooltip } from 'antd';
+import { useState } from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { FaHeart, FaRegPaperPlane } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
@@ -87,16 +88,13 @@ export const ProductCard = ({
   const connectedUser: ConnectedUserEntity = useSelector(
     (state: any) => state.userReducer,
   ).user;
+  const [favoris, setFavoris] = useState(produit.favoris);
 
   return (
     <CardContainer>
       <Card
         hoverable
         style={{ width: 300, height: '100%', borderRadius: 20 }}
-        onClick={() => {
-          router.push(ROUTES.CATALOG_PAGE.PRODUCT(produit._id), produit);
-          onClick?.();
-        }}
         cover={
           <>
             <Image
@@ -111,15 +109,29 @@ export const ProductCard = ({
               preview={false}
               src={API_ROUTES.IMAGES(produit.images[0])}
               fallback={defaultImage}
+              onClick={() => {
+                router.push(ROUTES.CATALOG_PAGE.PRODUCT(produit._id), produit);
+                onClick?.();
+              }}
             />
-            <Space style={{ display: 'flex', justifyContent: 'center' }}>
+            <Space
+              style={{ display: 'flex', justifyContent: 'center' }}
+              onClick={() => null}
+            >
               <Tooltip title='Ajouter aux favoris'>
-                {produit.favoris.includes(connectedUser.userId) ? (
+                {favoris.includes(connectedUser.userId) ? (
                   <FaHeart
                     size={25}
                     color='red'
                     onClick={() => {
-                      subFavoris(connectedUser.userId, produit._id);
+                      subFavoris(connectedUser.userId, produit._id).then(
+                        (data) => {
+                          if (data.success) {
+                            setFavoris(data.result.favoris);
+                            message.success(data.message);
+                          }
+                        },
+                      );
                     }}
                   />
                 ) : (
@@ -128,7 +140,14 @@ export const ProductCard = ({
                     color='red'
                     onClick={() => {
                       try {
-                        addFavoris(connectedUser.userId, produit._id);
+                        addFavoris(connectedUser.userId, produit._id).then(
+                          (data) => {
+                            if (data.success) {
+                              setFavoris(data.result.favoris);
+                              message.success(data.message);
+                            }
+                          },
+                        );
                       } catch (error) {
                         console.log('error', error);
                       }
@@ -147,7 +166,13 @@ export const ProductCard = ({
           </>
         }
       >
-        <div style={{ overflow: 'hidden', marginTop: -10 }}>
+        <div
+          style={{ overflow: 'hidden', marginTop: -10 }}
+          onClick={() => {
+            router.push(ROUTES.CATALOG_PAGE.PRODUCT(produit._id), produit);
+            onClick?.();
+          }}
+        >
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <p className='name'>{produit.nom}</p>
             <p className='category'>{produit.category.nom} </p>
