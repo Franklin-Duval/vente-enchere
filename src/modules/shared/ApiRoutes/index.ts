@@ -9,6 +9,10 @@ export const API_ROUTES = {
     BASE: `${BASE_URL}api/produits`,
     BASEID: (id: string) => `${BASE_URL}api/produits/${id}`,
     ADD_IMAGES: (id: string) => `${BASE_URL}api/produits/images/${id}`,
+    FAVORIS_ADD: (produitId: string, userId: string) =>
+      `${BASE_URL}api/produits/favoris/ajout/${produitId}/${userId}`,
+    FAVORIS_SUB: (produitId: string, userId: string) =>
+      `${BASE_URL}api/produits/favoris/delete/${produitId}/${userId}`,
   },
   LOTS: {
     BASE: `${BASE_URL}api/lots`,

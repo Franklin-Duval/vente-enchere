@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
-import { Card, Image, Space, Statistic, Tooltip } from 'antd';
+import { Card, Image, message, Space, Statistic, Tooltip } from 'antd';
+import { useState } from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
-import { FaRegPaperPlane } from 'react-icons/fa';
+import { FaHeart, FaRegPaperPlane } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
@@ -9,7 +10,8 @@ import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
 import { defaultImage } from '../../../shared/defaultImage';
-import { fetchRappel } from '../../catalog/network';
+import { addRappel } from '../../catalog/network';
+import { addFavoris, subFavoris } from '../../vendeur/network';
 import { API_ROUTES } from '../ApiRoutes';
 
 const CardContainer = styled.div`
@@ -83,20 +85,16 @@ export const ProductCard = ({
   onClick?: () => void;
 }) => {
   const router = useHistory();
-
   const connectedUser: ConnectedUserEntity = useSelector(
     (state: any) => state.userReducer,
   ).user;
+  const [favoris, setFavoris] = useState(produit.favoris);
 
   return (
     <CardContainer>
       <Card
         hoverable
         style={{ width: 300, height: '100%', borderRadius: 20 }}
-        onClick={() => {
-          router.push(ROUTES.CATALOG_PAGE.PRODUCT(produit._id), produit);
-          onClick?.();
-        }}
         cover={
           <>
             <Image
@@ -111,23 +109,70 @@ export const ProductCard = ({
               preview={false}
               src={API_ROUTES.IMAGES(produit.images[0])}
               fallback={defaultImage}
+              onClick={() => {
+                router.push(ROUTES.CATALOG_PAGE.PRODUCT(produit._id), produit);
+                onClick?.();
+              }}
             />
-            <Space style={{ display: 'flex', justifyContent: 'center' }}>
+            <Space
+              style={{ display: 'flex', justifyContent: 'center' }}
+              onClick={() => null}
+            >
               <Tooltip title='Ajouter aux favoris'>
-                <AiOutlineHeart size={25} color='red' />
+                {favoris.includes(connectedUser.userId) ? (
+                  <FaHeart
+                    size={25}
+                    color='red'
+                    onClick={() => {
+                      subFavoris(connectedUser.userId, produit._id).then(
+                        (data) => {
+                          if (data.success) {
+                            setFavoris(data.result.favoris);
+                            message.success(data.message);
+                          }
+                        },
+                      );
+                    }}
+                  />
+                ) : (
+                  <AiOutlineHeart
+                    size={25}
+                    color='red'
+                    onClick={() => {
+                      try {
+                        addFavoris(connectedUser.userId, produit._id).then(
+                          (data) => {
+                            if (data.success) {
+                              setFavoris(data.result.favoris);
+                              message.success(data.message);
+                            }
+                          },
+                        );
+                      } catch (error) {
+                        console.log('error', error);
+                      }
+                    }}
+                  />
+                )}
               </Tooltip>
               <Tooltip title='Me rappeler'>
                 <FaRegPaperPlane
                   size={20}
                   color={PRIMARY}
-                  onClick={() => fetchRappel(produit._id, connectedUser.userId)}
+                  onClick={() => addRappel(produit._id, connectedUser.userId)}
                 />
               </Tooltip>
             </Space>
           </>
         }
       >
-        <div style={{ overflow: 'hidden', marginTop: -10 }}>
+        <div
+          style={{ overflow: 'hidden', marginTop: -10 }}
+          onClick={() => {
+            router.push(ROUTES.CATALOG_PAGE.PRODUCT(produit._id), produit);
+            onClick?.();
+          }}
+        >
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <p className='name'>{produit.nom}</p>
             <p className='category'>{produit.category.nom} </p>

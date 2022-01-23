@@ -10,7 +10,7 @@ export const fetchLotProduit = (
   return customFetch.get(API_ROUTES.LOTS.GET_LOT_PRODUIT(productId));
 };
 
-export const fetchRappel = (
+export const addRappel = (
   productId: string,
   UserId: string,
 ): Promise<ResponseType<RappelEntity>> => {

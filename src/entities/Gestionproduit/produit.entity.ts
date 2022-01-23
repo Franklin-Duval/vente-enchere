@@ -36,5 +36,6 @@ export class ProduitEntity {
     this.dateCreation = produit.dateCreation;
     this.dateModification = produit.dateModification;
     this.dateSuppression = produit.dateSuppression;
+    this.favoris = produit.favoris;
   }
 }

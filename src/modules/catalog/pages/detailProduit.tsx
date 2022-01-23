@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from '@emotion/styled';
-import { Button, notification, Space, Tooltip } from 'antd';
+import { Button, message, notification, Space, Tooltip } from 'antd';
 import { useEffect, useState } from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
-import { FaRegPaperPlane } from 'react-icons/fa';
+import { FaHeart, FaLongArrowAltLeft, FaRegPaperPlane } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { useLocation } from 'react-router-dom';
@@ -18,7 +18,8 @@ import { DateFrHrWithTime } from '../../shared/DateToFrench';
 import { ImageCarousel } from '../../shared/ImageCarousel';
 import { Layout } from '../../shared/Layout';
 import { ProductCard } from '../../shared/ProductCard';
-import { fetchLotProduit, fetchRappel } from '../network';
+import { addFavoris, subFavoris } from '../../vendeur/network';
+import { addRappel, fetchLotProduit } from '../network';
 
 const ProductInfoContainer = styled.div`
   height: 350px;
@@ -61,10 +62,10 @@ export const ProductDetails = () => {
   const [product, setProduct] = useState<ProduitEntity>(
     router.location.state as any,
   );
+  const [favoris, setFavoris] = useState(product.favoris);
   const [lot, setLot] = useState<LotEntity>();
 
   const params = new URLSearchParams(useLocation().search);
-
   const connectedUser: ConnectedUserEntity = useSelector(
     (state: any) => state.userReducer,
   ).user;
@@ -84,6 +85,20 @@ export const ProductDetails = () => {
 
   return (
     <Layout footer={<Footer />}>
+      <Button
+        icon={
+          <FaLongArrowAltLeft
+            style={{ marginRight: 10, marginBottom: -4 }}
+            size={20}
+          />
+        }
+        type='link'
+        size='large'
+        style={{ marginBottom: 20 }}
+      >
+        Retour
+      </Button>
+      <div></div>
       <Space style={{ alignItems: 'flex-start', flexWrap: 'wrap' }} size={30}>
         <ImageCarousel imageListIds={product.images}></ImageCarousel>
         <ProductInfoContainer>
@@ -121,19 +136,51 @@ export const ProductDetails = () => {
           <div>
             <Space size={20}>
               <Tooltip title='Ajouter aux favoris'>
-                <AiOutlineHeart
-                  size={35}
-                  color='red'
-                  style={{ cursor: 'pointer' }}
-                />
+                {favoris.includes(connectedUser.userId) ? (
+                  <FaHeart
+                    size={25}
+                    color='red'
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      subFavoris(connectedUser.userId, product._id).then(
+                        (data) => {
+                          if (data.success) {
+                            setFavoris(data.result.favoris);
+                            message.success(data.message);
+                          }
+                        },
+                      );
+                    }}
+                  />
+                ) : (
+                  <AiOutlineHeart
+                    size={25}
+                    color='red'
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      try {
+                        addFavoris(connectedUser.userId, product._id).then(
+                          (data) => {
+                            if (data.success) {
+                              setFavoris(data.result.favoris);
+                              message.success(data.message);
+                            }
+                          },
+                        );
+                      } catch (error) {
+                        console.log('error', error);
+                      }
+                    }}
+                  />
+                )}
               </Tooltip>
               <Tooltip title='Me rappeler'>
                 <FaRegPaperPlane
-                  size={30}
+                  size={20}
                   color={PRIMARY}
                   style={{ cursor: 'pointer' }}
                   onClick={() => {
-                    fetchRappel(product._id, connectedUser.userId).then(
+                    addRappel(product._id, connectedUser.userId).then(
                       (data) => {
                         if (data.success) {
                           notification.success({

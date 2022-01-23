@@ -4,6 +4,7 @@ import './assets/global-css/modal-styles.css';
 import { AdminRoutes } from './modules/admin/routes/admin.routes';
 import { AuctionRoom } from './modules/auction/pages/auctionRoom';
 import { AuctionRoomAdmin } from './modules/auction/pages/auctionRoomAdmin';
+import { FavorisPage } from './modules/catalog/pages/favorisPage';
 import { CatalogRoutes } from './modules/catalog/routes/catalog.routes';
 import { CommissaireRoutes } from './modules/commissaire/routes/commissaire.routes';
 import { EnchereDetails } from './modules/enchere/page/detailenchere';
@@ -33,6 +34,7 @@ function App() {
         <Route path='/gerant' render={() => <GerantRoutes />} />
         <Route path='/commissaire' render={() => <CommissaireRoutes />} />
         <Route path='/enchere' render={() => <EnchereDetails />} />
+        <Route path='/favoris' render={() => <FavorisPage />} />
         <Route exact path='/unauthorized' component={Unauthorized} />
       </Switch>
     </BrowserRouter>
