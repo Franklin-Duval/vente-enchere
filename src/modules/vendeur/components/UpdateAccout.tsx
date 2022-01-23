@@ -27,9 +27,13 @@ export const UpdateAccout = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => form.resetFields());
 
   const datainform = {
-    ...user,
+    nom: user?.nom,
+    prenom: user?.prenom,
+    email: user?.email,
+    telephone: user?.telephone,
     ville: user?.localisation.ville,
     adresse: user?.localisation.adresse,
     pays: user?.localisation.pays,
@@ -46,7 +50,7 @@ export const UpdateAccout = () => {
       onFinish={async (data) => {
         setIsLoading(true);
 
-        let dataToPost: any = {
+        const dataToPost: any = {
           nom: data.nom,
           prenom: data.prenom,
           telephone: data.telephone,
@@ -56,11 +60,11 @@ export const UpdateAccout = () => {
           localisation: {
             adresse: data.adresse,
             ville: data.ville,
-            pays: 'Cameroun',
+            pays: data.pays,
           },
         };
-        console.log(dataToPost);
-        await update('61988cb9b62784f0da8d46cf', dataToPost)
+
+        await update(connectedUser._id, dataToPost)
           .then((data) => {
             if (data.success) {
               notification.success({
@@ -76,6 +80,7 @@ export const UpdateAccout = () => {
           })
           .catch((err) => console.log(err));
         setIsLoading(false);
+        console.log(dataToPost);
       }}
     >
       <Form.Item

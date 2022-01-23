@@ -10,8 +10,9 @@ import { subFavoris } from '../../vendeur/network';
 
 const FavContainer = styled.div`
   display: flex;
-  height: 300px;
-  margin: 20px;
+  height: 200px;
+  padding: 20px;
+  justify-content: left;
 
   .box {
     margin-left: 20px;
