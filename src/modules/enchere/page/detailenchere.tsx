@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
-import { Button, Space, Statistic, Tag } from 'antd';
+import { Button, Space, Spin, Statistic, Tag } from 'antd';
 import { useEffect, useState } from 'react';
+import { FaLongArrowAltLeft } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import { EnchereEntity } from '../../../entities/GestionEnchere/enchere.entity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
@@ -20,18 +21,48 @@ export const EnchereDetails = () => {
   const router = useHistory();
   const product = router.location.state as ProduitEntity;
   const [enchere, setEnchere] = useState<EnchereEntity>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchProduitEnchere(product._id).then((data) => {
       if (data.success) {
         setEnchere(data.result[0]);
+        setLoading(false);
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if (loading) {
+    return <Spin spinning={loading} />;
+  }
+
   if (!enchere) {
-    return <div></div>;
+    return (
+      <Layout footer={<Footer />}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: 400,
+          }}
+        >
+          <h2>Aucune enchère n'est défini pour l'instant!</h2>
+          <Button
+            type='primary'
+            size='large'
+            icon={<FaLongArrowAltLeft style={{ marginRight: 5 }} />}
+            onClick={() => {
+              router.goBack();
+            }}
+          >
+            Retour
+          </Button>
+        </div>
+      </Layout>
+    );
   }
 
   return (
