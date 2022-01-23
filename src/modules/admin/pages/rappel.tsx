@@ -28,19 +28,25 @@ export const AdminRappel = () => {
 
 const rappelColumns = [
   {
-    title: 'Date',
-    key: 'date_ajout',
-    dataIndex: 'date_ajout',
+    title: "Date d'ajout",
+    key: 'dateAjout',
+    dataIndex: 'dateAjout',
     render: dateFormatter,
   },
   {
     title: 'Produit',
     key: 'produit',
     dataIndex: 'produit',
+    render: (cell: any, row: any) => <span>{cell.nom}</span>,
   },
   {
     title: 'Utilisateur',
-    key: 'client',
-    dataIndex: 'client',
+    key: 'user',
+    dataIndex: 'user',
+    render: (cell: any, row: any) => (
+      <span>
+        {cell.nom} {cell.prenom}
+      </span>
+    ),
   },
 ];
