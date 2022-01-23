@@ -16,7 +16,7 @@ export const AdminRappel = () => {
         setIsLoading(false);
       }
     });
-  });
+  }, []);
 
   return (
     <AdminContainer clicked='rappel'>
