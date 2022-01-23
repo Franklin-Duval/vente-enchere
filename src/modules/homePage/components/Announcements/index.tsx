@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
 import { Space } from 'antd';
+import { useEffect, useState } from 'react';
 import { FaAngleRight } from 'react-icons/fa';
+import { EventEntity } from '../../../../entities/Gestionproduit/event.entity';
 import { PRIMARY } from '../../../../shared/colors';
+import { fetchEvent } from '../../../vendeur/network';
 import { AnnouncementCard } from './AnnouncementCard';
 
 const AnnonceContainer = styled.div`
@@ -12,6 +15,19 @@ const AnnonceContainer = styled.div`
 `;
 
 export const Announcements = () => {
+  const [events, setEvents] = useState<EventEntity[]>([]);
+
+  useEffect(() => {
+    fetchEvent().then((data) => {
+      if (data.success) {
+        if (data.result.length > 3) {
+          data.result.length = 3;
+        }
+        setEvents(data.result);
+      }
+    });
+  }, []);
+
   return (
     <>
       <Space style={{ justifyContent: 'space-between', width: '100%' }}>
@@ -24,9 +40,9 @@ export const Announcements = () => {
         </h3>
       </Space>
       <AnnonceContainer>
-        <AnnouncementCard announcement={{}} />
-        <AnnouncementCard announcement={{}} />
-        <AnnouncementCard announcement={{}} />
+        {events.map((event) => (
+          <AnnouncementCard key={event._id} event={event} />
+        ))}
       </AnnonceContainer>
     </>
   );

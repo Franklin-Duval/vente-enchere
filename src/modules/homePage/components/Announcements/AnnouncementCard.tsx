@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import { Button } from 'antd';
-import image from '../../../../assets/images/slide2.jpg';
+import { EventEntity } from '../../../../entities/Gestionproduit/event.entity';
 import { PRIMARY } from '../../../../shared/colors';
+import { API_ROUTES } from '../../../shared/ApiRoutes';
 
 const AnnouncementCardContainer = styled.div<{ backgroundImage: string }>`
   margin: 10px;
@@ -48,17 +49,16 @@ const AnnouncementCardContainer = styled.div<{ backgroundImage: string }>`
   }
 `;
 
-export const AnnouncementCard = ({ announcement }: { announcement: any }) => {
+export const AnnouncementCard = ({ event }: { event: EventEntity }) => {
   return (
-    <AnnouncementCardContainer backgroundImage={image}>
+    <AnnouncementCardContainer
+      backgroundImage={API_ROUTES.IMAGES(event.images[0])}
+    >
       <div>
-        <h2>Annonces</h2>
+        <h2>{event.nom}</h2>
+        <p>{event.description}</p>
         <p>
-          800kg de maïs et d'avocats seronts bientôt disponibles sur Agric
-          auctions.
-        </p>
-        <p>
-          <i>2021/11/05</i>{' '}
+          <i>{event.periode}</i>{' '}
         </p>
         <Button
           type='primary'
