@@ -1,12 +1,15 @@
 import styled from '@emotion/styled';
 import { Card, Image, Space, Statistic, Tooltip } from 'antd';
 import { AiOutlineHeart } from 'react-icons/ai';
-import { FaRegPaperPlane } from 'react-icons/fa';
+import { FaHeart, FaRegPaperPlane } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
 import { defaultImage } from '../../../shared/defaultImage';
+import { addFavoris, subFavoris } from '../../vendeur/network';
 import { API_ROUTES } from '../ApiRoutes';
 
 const CardContainer = styled.div`
@@ -80,6 +83,10 @@ export const ProductCard = ({
   onClick?: () => void;
 }) => {
   const router = useHistory();
+  const connectedUser: ConnectedUserEntity = useSelector(
+    (state: any) => state.userReducer,
+  ).user;
+
   return (
     <CardContainer>
       <Card
@@ -106,7 +113,27 @@ export const ProductCard = ({
             />
             <Space style={{ display: 'flex', justifyContent: 'center' }}>
               <Tooltip title='Ajouter aux favoris'>
-                <AiOutlineHeart size={25} color='red' />
+                {produit.favoris.includes(connectedUser.userId) ? (
+                  <FaHeart
+                    size={25}
+                    color='red'
+                    onClick={() => {
+                      subFavoris(connectedUser.userId, produit._id);
+                    }}
+                  />
+                ) : (
+                  <AiOutlineHeart
+                    size={25}
+                    color='red'
+                    onClick={() => {
+                      try {
+                        addFavoris(connectedUser.userId, produit._id);
+                      } catch (error) {
+                        console.log('error', error);
+                      }
+                    }}
+                  />
+                )}
               </Tooltip>
               <Tooltip title='Me rappeler'>
                 <FaRegPaperPlane size={20} color={PRIMARY} />
